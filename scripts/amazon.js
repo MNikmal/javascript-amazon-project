@@ -75,6 +75,8 @@ function renderProductsGrid() {
       document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
   }
 
+  updateCartQuantity();
+
   // Add event listeners for each add-to-cart button
   document.querySelectorAll('.js-add-to-cart').forEach((button) => {
       button.addEventListener('click', () => {
