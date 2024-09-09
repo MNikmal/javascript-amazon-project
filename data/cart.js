@@ -73,6 +73,24 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
     saveToStorage();
 }
 
+export function updateQuantity(productId, newQuantity) {
+    let matchingItem;
+
+    cart.forEach((cartItem) => {
+        if (productId === cartItem.productId) {
+            matchingItem = cartItem;
+        }
+    });
+
+    if (0 <= newQuantity && newQuantity <= 100) {
+        matchingItem.quantity = newQuantity;
+        saveToStorage();
+    }   
+    else {
+        alert("Error: Quantity must be between 0 and 100!")
+    }
+}
+
 export function loadCart(fun) {
     const xhr = new XMLHttpRequest();
   
