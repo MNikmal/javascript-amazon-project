@@ -105,6 +105,7 @@ async function renderOrdersPage() {
 		button.addEventListener('click', () => {
 			const productId = button.dataset.productId;
 			addToCart(productId, 1);
+			updateCartQuantity();
 		});
 	});
 }
