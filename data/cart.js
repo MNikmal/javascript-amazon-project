@@ -82,12 +82,12 @@ export function updateQuantity(productId, newQuantity) {
         }
     });
 
-    if (0 <= newQuantity && newQuantity <= 100) {
+    if (1 <= newQuantity && newQuantity <= 100) {
         matchingItem.quantity = newQuantity;
         saveToStorage();
     }   
     else {
-        alert("Error: Quantity must be between 0 and 100!")
+        alert("Error: Quantity must be a number between 1 and 100!");
     }
 }
 
