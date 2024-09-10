@@ -91,6 +91,7 @@ export function updateQuantity(productId, newQuantity) {
     }
 }
 
+/*
 export function loadCart(fun) {
     const xhr = new XMLHttpRequest();
   
@@ -101,4 +102,4 @@ export function loadCart(fun) {
   
     xhr.open('GET', 'https://supersimplebackend.dev/cart');
     xhr.send();
-  }
+*/
