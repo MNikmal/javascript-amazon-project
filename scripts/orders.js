@@ -5,7 +5,19 @@ import { cart, addToCart } from "../data/cart.js";
 
 renderOrdersPage();
 
+function updateCartQuantity() {
+	let cartQuantity = 0;
+  
+	cart.forEach((cartItem) => {
+		cartQuantity += cartItem.quantity;
+	})
+  
+	document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 async function renderOrdersPage() {
+	updateCartQuantity();
+
 	await loadProductsFetch();
 
     let orderContainersHTML = '';
