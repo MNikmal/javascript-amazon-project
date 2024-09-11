@@ -1,19 +1,10 @@
 import { orders } from "../data/orders.js";
 import formatCurrency from "./utils/money.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
-import { cart, addToCart } from "../data/cart.js";
+import {addToCart } from "../data/cart.js";
+import { updateCartQuantity } from "./amazon.js";
 
 renderOrdersPage();
-
-function updateCartQuantity() {
-	let cartQuantity = 0;
-  
-	cart.forEach((cartItem) => {
-		cartQuantity += cartItem.quantity;
-	})
-  
-	document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-}
 
 async function renderOrdersPage() {
 	updateCartQuantity();

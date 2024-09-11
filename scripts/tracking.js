@@ -1,5 +1,6 @@
 import {getOrder} from '../data/orders.js';
 import {getProduct, loadProductsFetch} from '../data/products.js';
+import { updateCartQuantity } from './amazon.js';
 
 const url = new URL(window.location.href);
 const orderId = url.searchParams.get('orderId');
@@ -8,6 +9,8 @@ const productId = url.searchParams.get('productId');
 renderTrackingSummary();
 
 async function renderTrackingSummary() {
+    updateCartQuantity();
+
     await loadProductsFetch();
 
     const matchingOrder = getOrder(orderId);
@@ -44,19 +47,37 @@ async function renderTrackingSummary() {
         <img class="product-image" src="${matchingProduct.image}">
 
         <div class="progress-labels-container">
-            <div class="progress-label">
+            <div class="progress-label js-progress-label-preparing">
             Preparing
             </div>
-            <div class="progress-label current-status">
+            <div class="progress-label js-progress-label-shipped">
             Shipped
             </div>
-            <div class="progress-label">
+            <div class="progress-label js-progress-label-delivered">
             Delivered
             </div>
         </div>
 
         <div class="progress-bar-container">
-            <div class="progress-bar"></div>
+            <div class="progress-bar js-progress-bar"></div>
         </div>
     `;
+
+    const currentTime = new Date();
+    const orderTime = new Date(matchingOrder.orderTime);
+    const deliveryTime = new Date(orderProduct.estimatedDeliveryTime);
+
+    const deliveryProgress = ((currentTime.getTime() - orderTime.getTime()) / (deliveryTime.getTime() - orderTime.getTime()) * 100);
+
+    let deliveryStatus = '';
+    if (deliveryProgress < 50) {
+        deliveryStatus = 'preparing';
+    } else if (deliveryProgress < 100) {
+        deliveryStatus = 'shipped';
+    } else {
+        deliveryStatus = 'delivered';
+    }
+
+    document.querySelector(`.js-progress-label-${deliveryStatus}`).classList.add('current-status');
+    document.querySelector('.js-progress-bar').style.width = `${deliveryProgress}%`;
 }
