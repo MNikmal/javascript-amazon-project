@@ -22,7 +22,7 @@ function containsMatch(productName, searchWords) {
   return true;
 }
 
-function renderProductsGrid() {
+export function searchProducts() {
   const url = new URL(window.location.href);
   const params = url.searchParams;
 
@@ -36,6 +36,10 @@ function renderProductsGrid() {
       }
     }
   }
+}
+
+function renderProductsGrid() {
+  searchProducts();
 
   updateCartQuantity();
   

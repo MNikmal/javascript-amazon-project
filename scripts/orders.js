@@ -2,11 +2,13 @@ import { orders } from "../data/orders.js";
 import formatCurrency from "./utils/money.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
 import {addToCart } from "../data/cart.js";
-import { updateCartQuantity } from "./amazon.js";
+import { updateCartQuantity, searchProducts } from "./amazon.js";
 
 renderOrdersPage();
 
 async function renderOrdersPage() {
+	searchProducts();
+
 	updateCartQuantity();
 
 	await loadProductsFetch();
@@ -99,4 +101,9 @@ async function renderOrdersPage() {
 			updateCartQuantity();
 		});
 	});
+
+	document.querySelector('.js-search-button').addEventListener('click', () => {
+		const search = document.querySelector('.js-search-bar').value;
+		window.location.href = `amazon.html?search=${search}`;
+	  })
 }

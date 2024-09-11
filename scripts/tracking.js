@@ -1,6 +1,6 @@
 import {getOrder} from '../data/orders.js';
 import {getProduct, loadProductsFetch} from '../data/products.js';
-import { updateCartQuantity } from './amazon.js';
+import { updateCartQuantity, searchProducts } from './amazon.js';
 
 const url = new URL(window.location.href);
 const orderId = url.searchParams.get('orderId');
@@ -9,6 +9,8 @@ const productId = url.searchParams.get('productId');
 renderTrackingSummary();
 
 async function renderTrackingSummary() {
+    searchProducts();
+
     updateCartQuantity();
 
     await loadProductsFetch();
@@ -80,4 +82,9 @@ async function renderTrackingSummary() {
 
     document.querySelector(`.js-progress-label-${deliveryStatus}`).classList.add('current-status');
     document.querySelector('.js-progress-bar').style.width = `${deliveryProgress}%`;
+
+    document.querySelector('.js-search-button').addEventListener('click', () => {
+		const search = document.querySelector('.js-search-bar').value;
+		window.location.href = `amazon.html?search=${search}`;
+	  })
 }
