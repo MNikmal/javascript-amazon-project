@@ -1,16 +1,15 @@
 import {getOrder} from '../data/orders.js';
 import {getProduct, loadProductsFetch} from '../data/products.js';
-import { updateCartQuantity, searchProducts } from './amazon.js';
-
-const url = new URL(window.location.href);
-const orderId = url.searchParams.get('orderId');
-const productId = url.searchParams.get('productId');
+import {updateCartQuantity, searchProducts} from './amazon.js';
 
 renderTrackingSummary();
 
 async function renderTrackingSummary() {
-    searchProducts();
+    const url = new URL(window.location.href);
+    const orderId = url.searchParams.get('orderId');
+    const productId = url.searchParams.get('productId');
 
+    searchProducts();
     updateCartQuantity();
 
     await loadProductsFetch();
