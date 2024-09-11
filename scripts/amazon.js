@@ -13,7 +13,30 @@ export function updateCartQuantity() {
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
+function containsMatch(productName, searchWords) {
+  for (let i = 0; i < searchWords.length; i++) {
+    if (!productName.includes(searchWords[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function renderProductsGrid() {
+  const url = new URL(window.location.href);
+  const params = url.searchParams;
+
+  if (params.get('search')) {
+    const search = params.get('search').toLowerCase();
+    const searchWords = search.split(" ");
+   
+    for (let i = products.length - 1; i >= 0; i--) {
+      if (!containsMatch(products[i].name.toLowerCase(), searchWords)) {
+        products.splice(i, 1);
+      }
+    }
+  }
+
   updateCartQuantity();
   
   let productsHTML = '';
@@ -85,4 +108,9 @@ function renderProductsGrid() {
           updateCartQuantity();
       });
   });
+
+  document.querySelector('.js-search-button').addEventListener('click', () => {
+    const search = document.querySelector('.js-search-bar').value;
+    window.location.href = `amazon.html?search=${search}`;
+  })
 }
